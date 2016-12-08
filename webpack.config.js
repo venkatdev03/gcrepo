@@ -1,29 +1,51 @@
 'use strict';
 
+var webpack = require('webpack');
+var path = require('path');
+
 module.exports = {
     module: {
         loaders: [
             {
                 test: /\.jsx?$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015','stage-0']
-                }
+                },
+                exclude: /(node_modules | bower_components)/
             }
         ],
     },
-    resolve: {
+    sassLoader: {
+    includePaths: [
+      path.resolve(__dirname, './node_modules/foundation-sites/scss')
+    ]
+  },
+  resolve: {
     root: __dirname,
     alias: {
-      Main : 'app/components/Main.jsx',
-      Nav : 'app/components/Nav.jsx'
-    }
+      applicationStyles: 'app/styles/app.scss'
     },
-    entry: './app/app.jsx',
+    extensions: ['','.js','.jsx']
+    },
+    entry: [
+      'script!jquery/dist/jquery.min.js',
+      'script!foundation-sites/dist/js/foundation.min.js',
+      './app/app.jsx'
+    ],
+    externals:{
+      jquery: 'jQuery',
+      foundation: 'Foundation'
+    },
+    plugins:[
+      new webpack.ProvidePlugin({
+    '$':          'jquery',
+    'jQuery':     'jquery'
+  })
+],
     output: {
         path: `${__dirname}`,
         filename: './public/bundle.js'
-    },
-    exclude: /(node_modules | bower_components)/
+    }
 
 };

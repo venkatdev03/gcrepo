@@ -10,6 +10,7 @@ export default class Main extends React.Component{
       <div>
       <Nav></Nav>
 <h2>Main Component</h2>
+<input type="text" />
 </div>
     )
   }

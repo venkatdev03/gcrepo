@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import Main from 'Main';
 
+
+//load foundation
+
+import 'style!css!foundation-sites/dist/css/foundation.min.css';
+$(document).foundation();
 
 
 ReactDOM.render(
-<Router history={hashHistory}>
-  <Route path="/" component={Main}>
-  </Route>
-</Router>,
+  <div> <h1>Hello Kasu You can Do it for sure. Victory is always yours</h1></div>,
   document.getElementById('app')
 );
