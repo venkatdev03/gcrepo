@@ -1,15 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import {Provider} from 'react-redux';
+import actions from 'actions';
+
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 
+import firebase from 'app/firebase/';
+import router from 'app/router/';
+var store = require('configureStore').configure();
 
-//load foundation
 
-import 'style!css!foundation-sites/dist/css/foundation.min.css';
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    alert('enter');
+    store.dispatch(actions.login(user.uid));
+    store.dispatch(actions.startAddTodos());
+    hashHistory.push('/todos');
+  } else {
+    store.dispatch(actions.logout());
+    hashHistory.push('/');
+  }
+});
+
+// Load foundation
 $(document).foundation();
 
+// App css
+require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
-  <div> <h1>Hello Kasu You can Do it for sure. Victory is always yours</h1></div>,
+  <Provider store={store}>
+    {router}
+  </Provider>,
   document.getElementById('app')
 );
